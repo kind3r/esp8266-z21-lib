@@ -676,9 +676,33 @@ void z21Class::setLocoStateFull(int Adr, byte steps, byte speed, byte F0, byte F
 
 //--------------------------------------------------------------------------------------------
 //return state of S88 sensors
-void z21Class::setS88Data(byte *data)
+void z21Class::setS88Data(byte *data, byte modules)
 {
-	EthSend(0, 0x0F, LAN_RMBUS_DATACHANGED, data, false, Z21bcRBus_s); //RMBUS_DATACHANED
+	// split data into 11 bytes blocks (1 packet address + 10 data)
+	byte MAdr = 1;		 // module number in packet
+	byte datasend[11]; // array holding the data to be sent (1 packet address + 10 modules data)
+	datasend[0] = 0;	 // fisrt byte is the packet address
+	for (byte m = 0; m < modules; m++)
+	{
+		datasend[MAdr] = data[m];
+		MAdr++;
+		// check if we have filled the data buffer and send it
+		if (MAdr >= 11)
+		{
+			EthSend(0, 0x0F, LAN_RMBUS_DATACHANGED, datasend, false, Z21bcRBus_s); //RMBUS_DATACHANED
+			MAdr = 1;																															 // reset the module number in packet
+			datasend[0]++;																												 //increment the next packet's address
+		}
+	}
+	if (MAdr < 11 && MAdr > 1) // if we still have a partial packet, fill it with 0 and send
+	{
+		while (MAdr < 11)
+		{
+			datasend[MAdr] = 0x00; // 0 values
+			MAdr++;								 // next module address
+		}
+		EthSend(0, 0x0F, LAN_RMBUS_DATACHANGED, datasend, false, Z21bcRBus_s); //RMBUS_DATACHANED
+	}
 }
 
 //--------------------------------------------------------------------------------------------

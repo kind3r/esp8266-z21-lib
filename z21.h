@@ -11,9 +11,9 @@
 
   Grundlage: Z21 LAN Protokoll Spezifikation V1.05 (21.01.2015)
 
-  Änderungen:
+  ï¿½nderungen:
 	- 23.09.15 Anpassung LAN_LOCONET_DETECTOR
-			   Fehlerbeseitigung bei der LAN Prüfsumme
+			   Fehlerbeseitigung bei der LAN Prï¿½fsumme
 			   Anpassung LAN_LOCONET_DISPATCH
 	- 14.07.16 add S88 Gruppenindex for request
 	- 22.08.16 add POM read notify
@@ -48,11 +48,11 @@
 #define z21FWVersionMSB 0x01
 #define z21FWVersionLSB 0x30
 /*
-HwType: #define D_HWT_Z21_OLD 0x00000200 // „schwarze Z21” (Hardware-Variante ab 2012) 
-		#define D_HWT_Z21_NEW 0x00000201 // „schwarze Z21”(Hardware-Variante ab 2013) 
+HwType: #define D_HWT_Z21_OLD 0x00000200 // ï¿½schwarze Z21ï¿½ (Hardware-Variante ab 2012) 
+		#define D_HWT_Z21_NEW 0x00000201 // ï¿½schwarze Z21ï¿½(Hardware-Variante ab 2013) 
 		#define D_HWT_SMARTRAIL 0x00000202 // SmartRail (ab 2012) 
-		#define D_HWT_z21_SMALL 0x00000203 // „weiße z21” Starterset-Variante (ab 2013) 
-		#define D_HWT_z21_START 0x00000204 // „z21 start” Starterset-Variante (ab 2016) 
+		#define D_HWT_z21_SMALL 0x00000203 // ï¿½weiï¿½e z21ï¿½ Starterset-Variante (ab 2013) 
+		#define D_HWT_z21_START 0x00000204 // ï¿½z21 startï¿½ Starterset-Variante (ab 2016) 
 */
 //Hardware-Typ: 0x00000201 // Z21 (Hardware-Variante ab 2013)
 #define z21HWTypeMSB 0x02
@@ -71,8 +71,8 @@ HwType: #define D_HWT_Z21_OLD 0x00000200 // „schwarze Z21” (Hardware-Variante ab
 #define csShortCircuit 0x04 // Kurzschluss
 #define csServiceMode 0x08 // Der Programmiermodus ist aktiv - Service Mode
 
-#define z21clientMAX 30        //Speichergröße für IP-Adressen
-#define z21ActTimeIP 20    //Aktivhaltung einer IP für (sec./2)
+#define z21clientMAX 30        //Speichergrï¿½ï¿½e fï¿½r IP-Adressen
+#define z21ActTimeIP 20    //Aktivhaltung einer IP fï¿½r (sec./2)
 #define z21IPinterval 2000   //interval at milliseconds
 
 //DCC Speed Steps
@@ -93,7 +93,7 @@ class z21Class
   public:
 	z21Class(void);	//Constuctor
 
-	void receive(uint8_t client, uint8_t *packet);				//Prüfe auf neue Ethernet Daten
+	void receive(uint8_t client, uint8_t *packet);				//Prï¿½fe auf neue Ethernet Daten
 	
 	void setPower(byte state);		//Zustand Gleisspannung Melden
 	byte getPower();		//Zusand Gleisspannung ausgeben
@@ -103,7 +103,7 @@ class z21Class
 	void setLocoStateFull (int Adr, byte steps, byte speed, byte F0, byte F1, byte F2, byte F3, bool bc);	//send Loco state 
 	unsigned long getz21BcFlag (byte flag);	//Convert local stored flag back into a Z21 Flag
 	
-	void setS88Data(byte *data);	//return state of S88 sensors
+	void setS88Data(byte *data, byte modules);	//return state of S88 sensors
 
 	void setLNDetector(byte *data, byte DataLen);	//return state from LN detector
 	void setLNMessage(byte *data, byte DataLen, byte bcType, bool TX);	//return LN Message
@@ -125,7 +125,7 @@ class z21Class
 		//Variables:
 	byte Railpower;				//state of the railpower
 	long z21IPpreviousMillis;        // will store last time of IP decount updated  
-	TypeActIP ActIP[z21clientMAX];    //Speicherarray für IPs
+	TypeActIP ActIP[z21clientMAX];    //Speicherarray fï¿½r IPs
 	
 		//Functions:
 	void EthSend (byte client, unsigned int DataLen, unsigned int Header, byte *dataString, boolean withXOR, byte BC);
