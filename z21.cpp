@@ -22,7 +22,13 @@ DueFlashStorage FlashStore;
 #define FSTORAGEMODE write
 #else
 #if defined(ARDUINO_ESP8266_ESP01)
-// AVR based Boards follows
+// Generic ESP8266
+#include <EEPROM.h>
+#define FSTORAGE EEPROM
+#define FSTORAGEMODE write
+#else
+#if defined(ARDUINO_ESP8266_WEMOS_D1MINI)
+// WeMos mini and D1 R2
 #include <EEPROM.h>
 #define FSTORAGE EEPROM
 #define FSTORAGEMODE write
@@ -31,6 +37,7 @@ DueFlashStorage FlashStore;
 #include <EEPROM.h>
 #define FSTORAGE EEPROM
 #define FSTORAGEMODE update
+#endif
 #endif
 #endif
 
